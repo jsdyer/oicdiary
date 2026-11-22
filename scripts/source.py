@@ -99,7 +99,17 @@ def parse_pco(raw):
   dt.date.fromisoformat(date)
   links=cells[0].xpath('.//a/@href');sources=[urljoin(PCO,link) for link in links]
   rows.append({'id':pc,'title':subject,'date':date,'department':department,'statute':act,'summary':precis,'chapter':chapter,'chapter_year':chapter_year,'bill':bill,'registration':registration,'source_url':sources[0] if sources else PCO,'attachments':sources})
- nextlinks=doc.xpath('//a[@rel="next"]/@href');return rows,urljoin(PCO,nextlinks[0]) if nextlinks else None
+ # The source omits rel=next before the final five pages. Follow an actual
+ # numbered pagination link after the active page, not that optional hint.
+ active=doc.xpath('//ul[contains(@class,"pagination")]//li[contains(concat(" ",normalize-space(@class)," ")," active ")]/a/@href')
+ current=int(parse_qs(urlsplit(active[0]).query).get('pageNum',['1'])[0]) if active else 1
+ following={}
+ for href in doc.xpath('//ul[contains(@class,"pagination")]//a/@href'):
+  parts=parse_qs(urlsplit(href).query);page=parts.get('pageNum',[''])[0]
+  if page.isdigit() and int(page)>current:following[int(page)]=urljoin(PCO,href)
+ nextlinks=doc.xpath('//a[@rel="next"]/@href')
+ nexturl=following[min(following)] if following else urljoin(PCO,nextlinks[0]) if nextlinks else None
+ return rows,nexturl
 
 def collect_pco():
  opener=build_opener(HTTPCookieProcessor(http.cookiejar.CookieJar()))

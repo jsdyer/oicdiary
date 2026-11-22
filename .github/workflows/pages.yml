@@ -37,6 +37,10 @@ jobs:
         run: |
           collect=false
           if [ "$EVENT" != pull_request ] && { [ "$EVENT" = schedule ] || [ "$EVENT" = workflow_dispatch ] || [ ! -f data/current.json ]; }; then collect=true; fi
+          if [ "$EVENT" != pull_request ] && [ -f data/current.json ]; then
+            version=$(python3 -c 'import json; print(json.load(open("data/current.json")).get("collector_version", 1))')
+            if [ "$version" != 2 ]; then collect=true; fi
+          fi
           echo "collect=$collect" >> "$GITHUB_OUTPUT"
 
       - name: Monitor collection start

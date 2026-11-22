@@ -18,6 +18,8 @@ The weekly snapshot diary and RSS feed show additions, changed entries and absen
 
 Some orders are not published because of statutory restrictions. This index reflects the public source and cannot establish the full set of cabinet decisions.
 
+The public search can omit its Next link before the final numbered pages. Collection follows the remaining numbered links and verifies distinct order IDs within the requested approval-date ranges.
+
 ## Collection and archive
 
 Schedule: **Weekly** (`53 8 * * 1`, UTC). GitHub schedules are best effort. Scheduled and manual runs collect, validate, commit dated snapshots and deploy. A first code push also collects if no saved dataset exists. Other code pushes rebuild the saved dataset offline.

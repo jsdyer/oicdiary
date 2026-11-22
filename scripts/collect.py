@@ -29,5 +29,5 @@ def main():
  if len({r['id'] for r in rows})!=len(rows):raise ValueError('Duplicate order IDs')
  for r in rows:r['order']=r['id'];r['year']=r['date'][:4]
  rows.sort(key=lambda r:(r['date'],r['id']),reverse=True)
- save(rows,sources=[{'label':'Privy Council Office public search','url':source.PCO},{'label':'About Orders in Council','url':'https://www.canada.ca/en/privy-council/services/orders-in-council.html'}],coverage=f'All returned orders approved {start} through {end} · official database also covers earlier years',warnings=['A newly observed order may have an earlier approval date. Some orders are withheld under statutory restrictions.'])
+ save(rows,sources=[{'label':'Privy Council Office public search','url':source.PCO},{'label':'About Orders in Council','url':'https://www.canada.ca/en/privy-council/services/orders-in-council.html'}],coverage=f'All returned orders approved {start} through {end} · official database also covers earlier years',warnings=['A newly observed order may have an earlier approval date. Some orders are withheld under statutory restrictions.','Collector version 2 follows numbered tail pages even where the source omits its Next link. Additions versus version 1 can reflect expanded extraction coverage.'],extra={'collector_version':2})
 if __name__=='__main__':main()
