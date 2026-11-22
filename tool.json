@@ -1,16 +1,22 @@
 {
-  "id": "coolcode-tool-template",
-  "title": "CoolCode Tool Starter",
-  "description": "A browser-only example that trims lines and removes exact duplicates.",
-  "category": "security",
-  "tags": ["text", "lines", "duplicates"],
-  "icon": "scan-search",
-  "url": "/coolcode-tool-template/",
-  "source": "https://github.com/jsdyer/coolcode-tool-template",
+  "id": "oicdiary",
+  "title": "Order in Council Diary",
+  "description": "Read the cabinet decisions hiding in plain sight. Search orders, appointments, departments and enabling statutes, then follow what changed.",
+  "category": "explorers",
+  "tags": [
+    "oicdiary",
+    "explorers",
+    "public data",
+    "history"
+  ],
+  "icon": "history",
+  "url": "/oicdiary/",
+  "source": "https://github.com/jsdyer/oicdiary",
   "hosting": "project",
   "access": "browser",
   "data_info": {
-    "mode": "local",
-    "detail": "The browser reads the text you paste and compares its lines."
+    "mode": "snapshot",
+    "detail": "A dated index of current-year Orders in Council, with a weekly capture and change feed.",
+    "cadence": "Weekly"
   }
 }

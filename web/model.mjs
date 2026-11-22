@@ -1,7 +1,2 @@
-// Keep transformations separate from the DOM so they can be tested directly.
-export function cleanLines(text) {
-  if (typeof text !== 'string') throw new TypeError('Expected text');
-  const lines = text.split(/\r\n|\r|\n/).map(line => line.trim()).filter(Boolean);
-  const unique = [...new Set(lines)];
-  return { text: unique.join('\n'), count: unique.length, removed: lines.length - unique.length };
-}
+import {counts} from './shared.mjs';export const present=rows=>rows;
+export function analyse(rows){return{metrics:[{label:'Orders selected',value:rows.length,note:'Public source index'},{label:'Departments',value:new Set(rows.map(r=>r.department)).size,note:'Source department labels'},{label:'Enabling statutes',value:new Set(rows.map(r=>r.statute).filter(Boolean)).size,note:'Not a count of legislative changes'},{label:'Latest approval',value:rows.map(r=>r.date).sort().at(-1)||'—',note:'Not the first-observed date'}],panels:[{title:'Orders by department',items:counts(rows,'department')},{type:'line',title:'Orders by approval month',items:counts(rows.map(r=>({...r,month:r.date.slice(0,7)})),'month').sort((a,b)=>a.label.localeCompare(b.label)),note:'The digest below tracks capture changes separately from approval dates.'}]};}
